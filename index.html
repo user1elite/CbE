@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CBE Transfer App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+      * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background: linear-gradient(145deg, #e9eff3 0%, #d7e0e8 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.app-container {
+    max-width: 480px;
+    width: 100%;
+    background: #ffffff;
+    border-radius: 3rem 3rem 2.5rem 2.5rem;
+    box-shadow: 0 30px 50px rgba(0, 20, 30, 0.2), 0 10px 20px rgba(0, 0, 0, 0.06);
+    padding: 2.2rem 1.8rem 2.2rem;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    min-height: 580px;
+    position: relative;
+}
+
+.page {
+    display: none;
+    animation: fadeIn 0.25s ease;
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.back-btn {
+    background: #f0f5fa;
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0a2a44;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: 0.1s;
+    border: 1px solid rgba(10, 42, 68, 0.04);
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+.back-btn:hover {
+    background: #dce6f0;
+    transform: scale(0.96);
+      }
+      .bank-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.2rem;
+}
+
+.bank-name {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #0a2a44;
+    line-height: 1.2;
+}
+
+.bank-name small {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #1d5b8e;
+    letter-spacing: 0.3px;
+    margin-top: 4px;
+    opacity: 0.9;
+}
+
+.bank-icon {
+    background: #0a2a44;
+    color: white;
+    width: 48px;
+    height: 48px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    box-shadow: 0 6px 12px rgba(10, 42, 68, 0.2);
+}
+
+.tagline {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: #1d5b8e;
+    letter-spacing: 0.3px;
+    margin-top: -0.3rem;
+    opacity: 0.8;
+    border-bottom: 1px dashed #c7d9e6;
+    padding-bottom: 0.6rem;
+    margin-bottom: 0.2rem;
+}
+
+.user-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f0f5fa;
+    padding: 0.6rem 1.2rem 0.6rem 1.5rem;
+    border-radius: 60px;
+    margin: 1.2rem 0 1rem;
+    border: 1px solid rgba(10, 42, 68, 0.06);
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #0a2a44;
+    letter-spacing: 0.3px;
+}
+
+.user-name i {
+    margin-right: 8px;
+    color: #1d5b8e;
+    font-size: 1rem;
+}
+
+.user-badge {
+    background: #0a2a44;
+    color: white;
+    font-size: 0.65rem;
+    font-weight: 600;
+    padding: 0.3rem 1rem;
+    border-radius: 40px;
+    letter-spacing: 0.5px;
+}
+
+.smile-account {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem 0 0.8rem;
+    padding: 0 0.2rem;
+}
+
+.smile {
+    font-size: 1.9rem;
+    line-height: 1;
+    color: #0a2a44;
+    letter-spacing: 2px;
+}
+
+.account-number {
+    background: #eef3f8;
+    padding: 0.4rem 1.3rem;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #0a2a44;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(10, 42, 68, 0.08);
+}
+
+.datetime {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: #2d4d6e;
+    background: #f2f7fc;
+    padding: 0.4rem 1rem;
+    border-radius: 30px;
+    margin: 0.2rem 0 1.8rem;
+    width: fit-content;
+    border: 1px solid rgba(10, 42, 68, 0.04);
+}
+
+.quick-pay-title {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #0a2a44;
+    letter-spacing: -0.3px;
+    margin: 0.5rem 0 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.quick-pay-sub {
+    font-size: 0.8rem;
+    color: #3b5e7a;
+    margin-bottom: 1.5rem;
+    border-left: 3px solid #1d5b8e;
+    padding-left: 12px;
+    font-weight: 400;
+    opacity: 0.8;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem 0.6rem;
+    margin: 1.8rem 0 1.2rem;
+}
+
+.service-item {
+    background: #f5f9ff;
+    border-radius: 2rem;
+    padding: 0.9rem 0.2rem 0.8rem;
+    text-align: center;
+    transition: all 0.15s;
+    border: 1px solid rgba(10, 42, 68, 0.03);
+    cursor: pointer;
+}
+
+.service-item:hover {
+    background: #eaf1fa;
+    border-color: #b3c9dd;
+    transform: scale(1.01);
+}
+
+.service-item i {
+    font-size: 1.9rem;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.service-item span {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    color: #1d3b57;
+}
+
+.service-item:nth-child(1) i { color: #0a5c7e; }
+.service-item:nth-child(2) i { color: #1b6b4a; }
+.service-item:nth-child(3) i { color: #9b6b2b; }
+.service-item:nth-child(4) i { color: #b13e3e; }
+.service-item:nth-child(5) i { color: #2d6d8f; }
+.service-item:nth-child(6) i { color: #7a4f8c; }
+
+.bottom-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.4rem;
+    padding: 0.8rem 0.2rem 0;
+    border-top: 1.5px solid #e5edf4;
+}
+
+.action-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: #0a2a44;
+    padding: 0.2rem 0.6rem;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.action-item:hover {
+    background: #e5edf6;
+}
+
+.action-item i {
+    font-size: 1rem;
+    color: #1d5b8e;
+    width: 1.4rem;
+    text-align: center;
+  .page-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1.8rem;
+    border-bottom: 1.5px solid #e5edf4;
+    padding-bottom: 1rem;
+}
+
+.page-title {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #0a2a44;
+    letter-spacing: -0.3px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.page-title i {
+    color: #1d5b8e;
+    font-size: 1.6rem;
+}
+
+.transfer-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.8rem;
+}
+
+.transfer-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8fbfe;
+    padding: 0.9rem 1.3rem 0.9rem 1.5rem;
+    border-radius: 60px;
+    border: 1px solid rgba(10, 42, 68, 0.03);
+    transition: all 0.1s;
+    cursor: pointer;
+    color: #0a2a44;
+}
+
+.transfer-item:hover {
+    background: #eef4fa;
+    border-color: #b3c9dd;
+    transform: scale(1.01);
+}
+
+.transfer-item-title {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #0a2a44;
+}
+
+.transfer-item-desc {
+    font-size: 0.75rem;
+    color: #3b5e7a;
+    opacity: 0.8;
+}
+
+.transfer-arrow {
+    color: #1d5b8e;
+    font-size: 1.2rem;
+    opacity: 0.6;
+    }
+  }
+     .account-card {
+    background: #f5f9ff;
+    border-radius: 2.2rem;
+    padding: 1.5rem 1.8rem;
+    border: 1px solid rgba(10, 42, 68, 0.06);
+    margin-top: 0.5rem;
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
+.account-card:hover {
+    background: #eef4fa;
+    border-color: #b3c9dd;
+}
+
+.account-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.6rem;
+}
+
+.account-label span:first-child {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #1d5b8e;
+    background: #e4edf6;
+    padding: 0.2rem 1rem;
+    border-radius: 40px;
+}
+
+.account-label span:last-child {
+    font-size: 0.75rem;
+    color: #3b5e7a;
+    background: #eaf1f8;
+    padding: 0.2rem 0.8rem;
+    border-radius: 40px;
+}
+
+.account-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.4rem;
+}
+
+.account-type {
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #0a2a44;
+}
+
+.account-type i {
+    margin-right: 10px;
+    color: #1d5b8e;
+}
+
+.account-balance {
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #0a2a44;
+    background: #eaf1f8;
+    padding: 0.2rem 1.2rem;
+    border-radius: 40px;
+}
+
+.account-balance small {
+    font-weight: 400;
+    font-size: 0.7rem;
+    color: #1d5b8e;
+    margin-right: 4px;
+}
+
+.account-sub {
+    margin-top: 0.8rem;
+    font-size: 0.75rem;
+    color: #3b5e7a;
+    border-top: 1px solid #dce6f0;
+    padding-top: 0.6rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.account-number-display {
+    background: #f5f9ff;
+    border-radius: 2.2rem;
+    padding: 1.5rem 1.8rem;
+    border: 2px solid #dce6f0;
+    transition: all 0.15s;
+    margin-top: 0.5rem;
+}
+
+.account-number-display:focus-within {
+    border-color: #1d5b8e;
+    box-shadow: 0 0 0 4px rgba(29, 91, 142, 0.08);
+}
+
+.account-number-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #3b5e7a;
+    font-weight: 500;
+    font-size: 0.85rem;
+    margin-bottom: 0.4rem;
+}
+
+.account-number-label i {
+    color: #1d5b8e;
+}
+
+.account-number-input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #0a2a44;
+    letter-spacing: 2px;
+    padding: 0.2rem 0;
+    outline: none;
+    font-family: 'Courier New', monospace;
+}
+
+.account-number-input::placeholder {
+    color: #a0b8cc;
+    font-weight: 400;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.account-hint {
+    font-size: 0.7rem;
+    color: #6a8aa6;
+    margin-top: 0.6rem;
+    border-top: 1px dashed #dce6f0;
+    padding-top: 0.6rem;
+  
+  } 
+      .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #1d3b57;
+    margin-bottom: 0.4rem;
+}
+
+.form-group label i {
+    color: #1d5b8e;
+    width: 1.2rem;
+}
+
+.form-input {
+    width: 100%;
+    background: #f5f9ff;
+    border: 2px solid #dce6f0;
+    border-radius: 2.2rem;
+    padding: 0.9rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #0a2a44;
+    outline: none;
+    transition: all 0.15s;
+}
+
+.form-input:focus {
+    border-color: #1d5b8e;
+    background: #f8fcff;
+    box-shadow: 0 0 0 4px rgba(29, 91, 142, 0.08);
+}
+
+.form-input::placeholder {
+    color: #a0b8cc;
+    font-weight: 400;
+}
+
+.amount-wrapper {
+    position: relative;
+}
+
+.amount-prefix {
+    position: absolute;
+    left: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #1d5b8e;
+    background: #eaf1f8;
+    padding: 0.2rem 0.8rem;
+    border-radius: 40px;
+}
+
+.amount-wrapper .form-input {
+    padding-left: 5.5rem;
+}
+
+.continue-btn {
+    margin-top: 0.8rem;
+    background: #0a2a44;
+    color: white;
+    border: none;
+    padding: 1rem 1.8rem;
+    border-radius: 60px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: 0.15s;
+    box-shadow: 0 8px 18px rgba(10, 42, 68, 0.2);
+}
+
+.continue-btn:hover {
+    background: #143a5e;
+    transform: scale(1.01);
+}
+
+.back-link {
+    margin-top: 1.2rem;
+    text-align: center;
+    font-size: 0.75rem;
+    border-top: 1px solid #e0eaf2;
+    padding-top: 1rem;
+}
+
+.back-link a {
+    color: #0a2a44;
+    text-decoration: none;
+    font-weight: 500;
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.back-link a:hover {
+    opacity: 1;
+    text-decoration: underline;
+      }
+              .receipt-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+            border-bottom: 1.5px solid #e5edf4;
+            padding-bottom: 0.8rem;
+        }
+
+        .receipt-time {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #1d5b8e;
+            background: #eaf1f8;
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+        }
+
+        .success-section {
+            text-align: center;
+            margin: 0.2rem 0 1.2rem;
+        }
+
+        .success-icon {
+            background: #e3f5ec;
+            width: 72px;
+            height: 72px;
+            border-radius: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.6rem;
+            color: #0f8b5e;
+            font-size: 2.6rem;
+        }
+
+        .success-title {
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: #0a2a44;
+        }
+
+        .success-sub {
+            font-size: 0.95rem;
+            color: #1d5b8e;
+            font-weight: 500;
+        }
+
+        .summary-box {
+            background: #f5f9ff;
+            border-radius: 2rem;
+            padding: 1.4rem 1.5rem;
+            border: 1px solid rgba(10, 42, 68, 0.04);
+            margin: 1.2rem 0 0.8rem;
+        }
+
+        .summary-box p {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: #1d3b57;
+        }
+
+        .summary-box strong {
+            color: #0a2a44;
+        }
+
+        .summary-box .highlight {
+            background: #eaf1f8;
+            padding: 0.1rem 0.4rem;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .summary-box .tx-id {
+            font-family: 'Courier New', monospace;
+            background: #e4edf6;
+            padding: 0.1rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .fee-breakdown {
+            margin-top: 0.6rem;
+            padding-top: 0.6rem;
+            border-top: 1px dashed #d0dce8;
+            font-size: 0.8rem;
+            color: #3b5e7a;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem 0.8rem;
+        }
+
+        .fee-breakdown span {
+            background: #eaf1f8;
+            padding: 0.1rem 0.6rem;
+            border-radius: 30px;
+        }
+
+        .bank-footer {
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #0a2a44;
+            margin: 0.6rem 0 1.2rem;
+            border-top: 1px solid #e5edf4;
+            padding-top: 1rem;
+        }
+
+        .bank-footer small {
+            font-weight: 400;
+            font-size: 0.7rem;
+            color: #3b5e7a;
+            display: block;
+        }
+
+        .action-row {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 0.2rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            background: #f0f5fa;
+            border: none;
+            border-radius: 60px;
+            padding: 0.8rem 0.6rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #0a2a44;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: 0.1s;
+            border: 1px solid rgba(10, 42, 68, 0.04);
+        }
+
+        .action-btn:hover {
+            background: #e5edf6;
+            transform: scale(0.98);
+        }
+
+        .action-btn i {
+            color: #1d5b8e;
+        }
+
+        .close-btn {
+            margin-top: 0.8rem;
+            background: #eef3f8;
+            border: none;
+            border-radius: 60px;
+            padding: 0.9rem;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #0a2a44;
+            width: 100%;
+            cursor: pointer;
+            transition: 0.1s;
+            border: 1px solid rgba(10, 42, 68, 0.04);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .close-btn:hover {
+            background: #dce6f0;
+        }
+
+        @media (max-width: 480px) {
+            .app-container { padding: 1.8rem 1.2rem; }
+            .page-title { font-size: 1.5rem; }
+            .success-title { font-size: 1.6rem; }
+            .action-row { flex-wrap: wrap; }
+            .action-btn { flex: 1 1 40%; }
+            .amount-wrapper .form-input { padding-left: 4.8rem; }
+        }
+    </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- PAGE 1: DASHBOARD -->
+    <div id="page-dashboard" class="page active">
+        <div class="bank-header">
+            <div class="bank-name">Commercial Bank <br /><small>of Ethiopia</small></div>
+            <div class="bank-icon"><i class="fas fa-university"></i></div>
+        </div>
+        <div class="tagline"><i class="fas fa-check-circle" style="margin-right:4px;color:#1d7a4a;"></i> The Bank You can always Rely on!</div>
+        <div class="user-row">
+            <span class="user-name"><i class="fas fa-user-circle"></i> ABENET ADUGNA ALEBACHEW</span>
+            <span class="user-badge"><i class="fas fa-shield-alt"></i> ★</span>
+        </div>
+        <div class="smile-account">
+            <span class="smile">************Br. <span style="font-size:1.4rem;">😊</span></span>
+            <span class="account-number"><i class="fas fa-credit-card"></i> 1000****784</span>
+        </div>
+        <div class="datetime"><i class="far fa-calendar-alt"></i> Jul 15, 2026, 07:10:30 PM</div>
+        <div class="quick-pay-title"><i class="fas fa-bolt"></i> Quick Pay</div>
+        <div class="quick-pay-sub"><i class="fas fa-arrow-right" style="font-size:0.7rem;margin-right:6px;"></i> Services</div>
+        <div class="services-grid">
+            <div class="service-item" onclick="navigateTo('page-transfer')"><i class="fas fa-wifi"></i><span>Telecom<br />Service</span></div>
+            <div class="service-item" onclick="navigateTo('page-transfer')"><i class="fas fa-exchange-alt"></i><span>Transfer</span></div>
+            <div class="service-item"><i class="fas fa-tint"></i><span>Utilities</span></div>
+            <div class="service-item"><i class="fas fa-question-circle"></i><span>help</span></div>
+            <div class="service-item"><i class="fas fa-piggy-bank"></i><span>Banking</span></div>
+            <div class="service-item"><i class="fas fa-calendar-check"></i><span>events</span></div>
+        </div>
+        <div class="bottom-actions">
+            <div class="action-item"><i class="fas fa-life-ring"></i> help</div>
+            <div class="action-item"><i class="fas fa-university"></i> Banking</div>
+            <div class="action-item"><i class="fas fa-calendar-day"></i> events</div>
+        </div>
+        <div style="margin-top:1rem;text-align:right;font-size:0.6rem;color:#a0b8cc;border-top:1px solid #e0eaf2;padding-top:0.8rem;opacity:0.5;"><i class="fas fa-lock"></i> secure · CBE</div>
+    </div>
+
+    <!-- PAGE 2: TRANSFER LIST -->
+    <div id="page-transfer" class="page">
+        <div class="page-header">
+            <div class="back-btn" onclick="navigateTo('page-dashboard')"><i class="fas fa-arrow-left"></i></div>
+            <div class="page-title"><i class="fas fa-exchange-alt"></i> Transfer</div>
+        </div>
+        <div class="transfer-list">
+            <div class="transfer-item" onclick="navigateTo('page-select-account')">
+                <div><div class="transfer-item-title">Transfer to CBE Account</div><div class="transfer-item-desc">Transfer to CBE Account</div></div>
+                <span class="transfer-arrow"><i class="fas fa-chevron-right"></i></span>
+            </div>
+            <div class="transfer-item">
+                <div><div class="transfer-item-title">Transfer to CBEBirr Wallet</div><div class="transfer-item-desc">Bank to CBEBirr Wallet transfer</div></div>
+                <span class="transfer-arrow"><i class="fas fa-chevron-right"></i></span>
+            </div>
+            <div class="transfer-item">
+                <div><div class="transfer-item-title">Make Payment to Beneficiary</div><div class="transfer-item-desc">Transfer to your beneficiaries</div></div>
+                <span class="transfer-arrow"><i class="fas fa-chevron-right"></i></span>
+            </div>
+            <div class="transfer-item">
+                <div><div class="transfer-item-title">Own Account Transfer</div><div class="transfer-item-desc">Transfer between your accounts</div></div>
+                <span class="transfer-arrow"><i class="fas fa-chevron-right"></i></span>
+            </div>
+            <div class="transfer-item">
+                <div><div class="transfer-item-title">Local Money Transfer</div><div class="transfer-item-desc">Transfer to any non CBE customer</div></div>
+                <span class="transfer-arrow"><i class="fas fa-chevron-right"></i></span>
+            </div>
+            <div class="transfer-item">
+                <div><div class="transfer-item-title">Transfer to own Telebirr Wallet</div><div class="transfer-item-desc">Transfer to own Telebirr Wallet</div></div>
+                <span class="transfer-arrow"><i class="fas fa-chevron-right"></i></span>
+            </div>
+            <div class="transfer-item">
+                <div><div class="transfer-item-title">Transfer to Other Banks</div><div class="transfer-item-desc">Transfer to Other Banks</div></div>
+                <span class="transfer-arrow"><i class="fas fa-chevron-right"></i></span>
+            </div>
+            <div class="transfer-item">
+                <div><div class="transfer-item-title">Transfer to Wallet</div><div class="transfer-item-desc">Transfer to Wallet</div></div>
+                <span class="transfer-arrow"><i class="fas fa-chevron-right"></i></span>
+            </div>
+        </div>
+        <div class="back-link"><a onclick="navigateTo('page-dashboard')"><i class="fas fa-arrow-left"></i> Back to Dashboard</a></div>
+    </div>
+
+    <!-- PAGE 3: SELECT ACCOUNT -->
+    <div id="page-select-account" class="page">
+        <div class="page-header">
+            <div class="back-btn" onclick="navigateTo('page-transfer')"><i class="fas fa-arrow-left"></i></div>
+            <div class="page-title"><i class="fas fa-check-circle"></i> Select</div>
+        </div>
+        <div class="account-card" onclick="navigateTo('page-account-number')">
+            <div class="account-label">
+                <span><i class="fas fa-tag"></i> Saving</span>
+                <span><i class="fas fa-coins"></i> ETB - 8408</span>
+            </div>
+            <div class="account-main">
+                <span class="account-type"><i class="fas fa-university"></i> Saving Account</span>
+                <span class="account-balance"><small>ETB</small> 50,000</span>
+            </div>
+            <div class="account-sub">
+                <span><i class="fas fa-credit-card"></i> •••• 784</span>
+                <span><i class="fas fa-clock"></i> Available</span>
+            </div>
+        </div>
+        <button class="continue-btn" onclick="navigateTo('page-account-number')"><i class="fas fa-arrow-right"></i> Continue</button>
+        <div class="back-link"><a onclick="navigateTo('page-transfer')"><i class="fas fa-arrow-left"></i> Back to transfer options</a></div>
+    </div>
+
+    <!-- PAGE 4: ACCOUNT NUMBER -->
+    <div id="page-account-number" class="page">
+        <div class="page-header">
+            <div class="back-btn" onclick="navigateTo('page-select-account')"><i class="fas fa-arrow-left"></i></div>
+            <div class="page-title"><i class="fas fa-hashtag"></i> Account No</div>
+        </div>
+        <div class="account-number-display">
+            <div class="account-number-label"><i class="fas fa-credit-card"></i> Enter account number</div>
+            <input type="text" class="account-number-input" placeholder="e.g. 1000123456789" id="accountInput" />
+            <div class="account-hint"><i class="fas fa-info-circle"></i> Enter the recipient's CBE account number</div>
+        </div>
+        <button class="continue-btn" onclick="handleAccountNumber()"><i class="fas fa-arrow-right"></i> Continue</button>
+        <div class="back-link"><a onclick="navigateTo('page-select-account')"><i class="fas fa-arrow-left"></i> Back to account selection</a></div>
+    </div>
+
+    <!-- PAGE 5: NAME & AMOUNT -->
+    <div id="page-name-amount" class="page">
+        <div class="page-header">
+            <div class="back-btn" onclick="navigateTo('page-account-number')"><i class="fas fa-arrow-left"></i></div>
+            <div class="page-title"><i class="fas fa-user"></i> Name & Amount</div>
+        </div>
+        <div class="form-group">
+            <label for="recipientName"><i class="fas fa-user-circle"></i> Recipient Name</label>
+            <input type="text" class="form-input" id="recipientName" placeholder="Enter full name" />
+        </div>
+        <div class="form-group">
+            <label for="amountInput"><i class="fas fa-coins"></i> Amount (ETB)</label>
+            <div class="amount-wrapper">
+                <span class="amount-prefix">ETB</span>
+                <input type="text" class="form-input" id="amountInput" placeholder="0.00" />
+            </div>
+        </div>
+        <button class="continue-btn" onclick="handleNameAmount()"><i class="fas fa-arrow-right"></i> Continue</button>
+        <div class="back-link"><a onclick="navigateTo('page-account-number')"><i class="fas fa-arrow-left"></i> Back to account number</a></div>
+    </div>
+
+    <!-- PAGE 6: RECEIPT -->
+    <div id="page-receipt" class="page">
+        <div class="receipt-header">
+            <span class="receipt-time"><i class="far fa-clock"></i> 1:27 PM</span>
+            <div class="back-btn" onclick="navigateTo('page-dashboard')"><i class="fas fa-arrow-left"></i></div>
+        </div>
+        <div class="success-section">
+            <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+            <div class="success-title">Thank you</div>
+            <div class="success-sub"><i class="fas fa-check-circle" style="color:#0f8b5e;"></i> Success</div>
+            <div style="font-size:0.85rem;color:#3b5e7a;">Transaction Completed Successfully!</div>
+        </div>
+        <div class="summary-box">
+            <p><strong>ETB 970.00</strong> has been debited from <strong>Eyob Yitayal Demissie</strong> <span class="highlight">ETB-9498</span> for <strong>Ayenew Abera Alambo</strong> <span class="highlight">ETB-9957</span> on <strong>Jul 13, 2026 01:28 PM</strong> with transaction ID: <span class="tx-id">FT26194RZ3ZN</span>.</p>
+            <p style="margin-top:0.4rem;font-size:0.82rem;"><strong>Reason:</strong> MB Transfer</p>
+            <div class="fee-breakdown">
+                <span><strong>Total Debited:</strong> ETB 970.61</span>
+                <span><strong>Service Charge:</strong> ETB 0.50</span>
+                <span><strong>VAT (15%):</strong> ETB 0.08</span>
+                <span><strong>Disaster Recovery (5%):</strong> ETB 0.03</span>
+            </div>
+        </div>
+        <div class="bank-footer">Commercial Bank of Ethiopia<small><i class="fas fa-university"></i> The Bank You can always Rely on!</small></div>
+        <div class="action-row">
+            <button class="action-btn" onclick="alert('Receipt saved (demo)')"><i class="fas fa-receipt"></i> Receipt</button>
+            <button class="action-btn" onclick="alert('Screenshot captured (demo)')"><i class="fas fa-camera"></i> Screenshot</button>
+            <button class="action-btn" onclick="alert('Share options (demo)')"><i class="fas fa-share-alt"></i> Share</button>
+        </div>
+        <button class="close-btn" onclick="navigateTo('page-dashboard')"><i class="fas fa-times"></i> Close</button>
+    </div>
+</div>
+
+<script>
+    function navigateTo(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        const target = document.getElementById(pageId);
+        if (target) target.classList.add('active');
+    }
+
+    function handleAccountNumber() {
+        const input = document.getElementById('accountInput');
+        if (input.value.trim() === '') {
+            alert('Please enter an account number.');
+            input.focus();
+            return;
+        }
+        navigateTo('page-name-amount');
+    }
+
+    function handleNameAmount() {
+        const name = document.getElementById('recipientName').value.trim();
+        const amount = document.getElementById('amountInput').value.trim();
+        if (name === '') { alert('Please enter the recipient\'s name.'); return; }
+        if (amount === '') { alert('Please enter an amount.'); return; }
+        const num = parseFloat(amount.replace(/,/g, ''));
+        if (isNaN(num) || num <= 0) { alert('Please enter a valid amount.'); return; }
+        navigateTo('page-receipt');
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('accountInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { e.preventDefault(); handleAccountNumber(); }
+        });
+        document.getElementById('amountInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { e.preventDefault(); handleNameAmount(); }
+        });
+        document.getElementById('recipientName').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') { e.preventDefault(); document.getElementById('amountInput').focus(); }
+        });
+    });
+</script>
+</body>
+                                                                                      </html>
